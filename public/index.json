@@ -1,0 +1,57 @@
+[
+{
+	"uri": "http://localhost:1313/chapter1/",
+	"title": "Chuẩn bị React App",
+	"tags": [],
+	"description": "",
+	"content": "Trước tiên, chúng ta sẽ chuẩn bị một React App có thể chạy trên localhost. Hiện tại có nhiều repo React trên github, bạn có thể clone repo tôi đã chuẩn bị sẵn bằng câu lệnh sau:\ngit clone https://github.com/BuiDuongKham/my-mpa-react-app.git Sau khi repo này được clone về, project có cấu trúc như sau: Chúng ta chạy câu lệnh sau để download các package cần thiết:\nnpm install Tiếp theo chúng ta chạy câu lệnh sau và truy cập vào localhost:3000 để xem kết quả:\nNhư vậy là chúng ta đã có một react app có thể chạy ổn định trên môi trường localhost.\n"
+},
+{
+	"uri": "http://localhost:1313/chapter2/",
+	"title": "Tạo và cấu hình S3 bucket",
+	"tags": [],
+	"description": "",
+	"content": "Sau khi chạy được app trên localhost, chúng ta sẽ build app rồi deploy nó trên một s3 bucket.\nTrước hết, chạy câu lệnh sau để build app: npm run build Chúng ta sẽ khởi tạo một s3 bucket cho phép truy cập public đến các file, thư mục vừa được build. 2. Tạo S3 Bucket Tìm dịch vụ S3 và tạo mới 1 bucket Đặt tên cho bucket Bỏ tick ở mục block all public access\nTick \u0026ldquo;I acknowledge that the current settings might result in this bucket and the objects within becoming public.\u0026rdquo;\nChọn \u0026ldquo;Create Bucket\u0026rdquo;\nConfig S3 Bucket Chọn s3 bucket vừa tạo Vào tab \u0026ldquo;Properties\u0026rdquo;, kéo xuống dưới mục \u0026ldquo;Static Web Hosing\u0026rdquo;, chọn \u0026ldquo;Edit\u0026rdquo;:\nỞ mục \u0026ldquo;Static Website Hosting\u0026rdquo;, tick chọn \u0026ldquo;Enable\u0026rdquo; và điền default page là \u0026ldquo;index.html\u0026rdquo;, rồi nhấn \u0026ldquo;Save Changes\u0026rdquo;.\nThử truy cập vào đường dẫn của website ta, thấy được lỗi 403, tức là ta không được quyền truy cập đến tài nguyên này.\nTa sẽ thiết lập quyền truy cập vào tài nguyên S3 bucket này từ mọi nơi.\nVào tab \u0026ldquo;Permission\u0026rdquo;, ở mục \u0026ldquo;Bucket Policy\u0026rdquo;, chọn edit\nĐiền đoạn policy sau, sau đó nhấn \u0026ldquo;Save Changes\u0026rdquo;:\n{ \u0026#34;Version\u0026#34;: \u0026#34;2012-10-17\u0026#34;, \u0026#34;Statement\u0026#34;: [ { \u0026#34;Sid\u0026#34;: \u0026#34;PublicReadGetObject\u0026#34;, \u0026#34;Effect\u0026#34;: \u0026#34;Allow\u0026#34;, \u0026#34;Principal\u0026#34;: \u0026#34;*\u0026#34;, \u0026#34;Action\u0026#34;: \u0026#34;s3:GetObject\u0026#34;, \u0026#34;Resource\u0026#34;: \u0026#34;\u0026lt;BUCKET_ARN\u0026gt;/*\u0026#34; } ] } Truy cập lại đường dẫn đến static web, lúc này ta thấy hiện lên lỗi 404, tức là do static web không thể tìm thấy được trang index.html:\nUpload file, folder lên S3 Vào tab \u0026ldquo;Objects\u0026rdquo; chọn \u0026ldquo;Upload\u0026rdquo;, upload toàn bộ file và folder trong thư mục \u0026ldquo;build\u0026rdquo; trong react app của chúng ta.\nSau khi upload xong, chúng ta truy cập vào website và thấy nó đã có thể xem được nội dung.\n"
+},
+{
+	"uri": "http://localhost:1313/chapter3/",
+	"title": "Tạo CI/CD pipeline với Buddy",
+	"tags": [],
+	"description": "",
+	"content": "Tiếp theo, chúng ta sẽ tạo một pipeline CI/CD với Buddy để tự động build và deploy app lên S3 bucket mỗi khi có thay đổi trên branch master (có thể sử dụng CodePipeline và CodeBuild, cũng là 2 dịch vụ của AWS để gói gọn dự án trong khuôn khổ AWS, tuy nhiên, 2 CodeBuild không thích hợp sử dụng vì chính sách Limitation với tài khoản mới của AWS).\nĐầu tiên, push code của bạn lên github Tạo một repo public trên Github Push code từ local repo lên remote repo bằng câu lệnh ``` git remote add origin \u0026lt;REPO_URL\u0026gt; git branch -M main git push -u origin main ``` 2. Đầu tiên, truy cập vào website Buddy và đăng nhập bằng tài khoản github đang chứa repo vừa push\nChọn \u0026ldquo;Add Project\u0026rdquo;\nChọn GitHub Provider và xác nhận ủy quyền truy cập\nChọn repo vừa push và chọn \u0026ldquo;Sync\u0026rdquo;\nChọn \u0026ldquo;New Pipeline\u0026rdquo;\nTạo một pipeline mới như sau:\nỞ mục \u0026ldquo;Run Container\u0026rdquo; chọn Node.js\nTạo command để install các thư viện và build app\nTiếp theo, chúng ta tạo một IAM user để Buddy có thể upload file lên S3. Truy cập vào dịch vụ IAM, Chọn \u0026ldquo;Create user\u0026rdquo;, điền thông tin như sau: Thêm Permission \u0026quot;AmazonS3FullAccess\u0026quot; cho IAM user. Quay trở lại màn hình của Buddy, nhấn vào dấu \u0026ldquo;+\u0026rdquo; để thêm Action Tạo access key cho IAM user vừa tạo Chọn nguồn file cần upload\nChọn Bucket nơi code build sẽ được upload Ta chạy thử pipeline vừa tạo\nTa thử thay đổi source code và push lên remote repo, đợi vài phút để xem pipeline của chúng ta có hoạt động không "
+},
+{
+	"uri": "http://localhost:1313/chapter4/",
+	"title": "Xóa Resource",
+	"tags": [],
+	"description": "",
+	"content": " Truy cập vào dịch vụ S3, chọn bucket cần xóa, chọn Empty và xác nhận xóa. Chọn bucket cần xóa, chọn Delete và xác nhận xóa. Truy cập vào dịch vụ IAM, chọn user BuddyClient cần xóa, chọn Delete và xác nhận xóa. "
+},
+{
+	"uri": "http://localhost:1313/chapter5/",
+	"title": "Tổng kết",
+	"tags": [],
+	"description": "",
+	"content": " Chúng ta đã sử dụng React để tạo một multi-page app. Chúng ta đã sử dụng S3 để host app. Chúng ta đã sử dụng Buddy để tự động build và deploy app lên S3 bucket. Nếu hạn mức của tài khoản AWS cho phép, bạn có thể sử dụng CodePipeline và CodeBuild để thực hiện các công việc tương tự.\n"
+},
+{
+	"uri": "http://localhost:1313/",
+	"title": "Cấu trúc file",
+	"tags": [],
+	"description": "",
+	"content": "Giới thiệu "
+},
+{
+	"uri": "http://localhost:1313/categories/",
+	"title": "Categories",
+	"tags": [],
+	"description": "",
+	"content": ""
+},
+{
+	"uri": "http://localhost:1313/tags/",
+	"title": "Tags",
+	"tags": [],
+	"description": "",
+	"content": ""
+}]

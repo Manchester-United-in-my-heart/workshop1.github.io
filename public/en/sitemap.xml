@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8" standalone="yes"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+  xmlns:xhtml="http://www.w3.org/1999/xhtml">
+  <url>
+    <loc>http://localhost:1313/chapter1/</loc>
+    <lastmod>2024-03-13T15:27:25+07:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang=" vi"
+                href="http://localhost:1313/vi/chapter1/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/chapter1/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/chapter2/</loc>
+    <lastmod>2024-03-13T20:57:01+07:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang=" vi"
+                href="http://localhost:1313/vi/chapter2/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/chapter2/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/chapter3/</loc>
+    <lastmod>2024-03-13T22:44:06+07:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang=" vi"
+                href="http://localhost:1313/vi/chapter3/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/chapter3/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/chapter4/</loc>
+    <lastmod>2024-03-14T00:00:28+07:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang=" vi"
+                href="http://localhost:1313/vi/chapter4/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/chapter4/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/chapter5/</loc>
+    <lastmod>2024-03-14T00:04:50+07:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang=" vi"
+                href="http://localhost:1313/vi/chapter5/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/chapter5/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/</loc>
+    <lastmod>2024-03-12T11:26:36+07:00</lastmod>
+    <xhtml:link
+                rel="alternate"
+                hreflang=" vi"
+                href="http://localhost:1313/vi/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/categories/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang=" vi"
+                href="http://localhost:1313/vi/categories/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/categories/"
+                />
+  </url><url>
+    <loc>http://localhost:1313/tags/</loc>
+    <xhtml:link
+                rel="alternate"
+                hreflang=" vi"
+                href="http://localhost:1313/vi/tags/"
+                />
+    <xhtml:link
+                rel="alternate"
+                hreflang="en"
+                href="http://localhost:1313/tags/"
+                />
+  </url>
+</urlset>
